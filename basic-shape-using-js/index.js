@@ -79,6 +79,37 @@ const lineData = [
   },
 ];
 
+const ellipseData = [
+  {
+    label: "first",
+    cx: 25,
+    cy: 25,
+    rx: 25,
+    ry: 15,
+  },
+  {
+    label: "second",
+    cx: 75,
+    cy: 75,
+    rx: 25,
+    ry: 15,
+  },
+  {
+    label: "third",
+    cx: 125,
+    cy: 125,
+    rx: 25,
+    ry: 15,
+  },
+  {
+    label: "fourth",
+    cx: 175,
+    cy: 175,
+    rx: 25,
+    ry: 15,
+  },
+];
+
 const rectSvgContainer = d3
   .select(".rectangle")
   .append("svg")
@@ -129,3 +160,19 @@ const lineShape = lineSvgContainer
   .attr("y1", (d) => d.y1)
   .attr("stroke-width", "2")
   .attr("stroke", "red");
+
+const ellipseSvgContainer = d3
+  .select(".ellipse")
+  .append("svg")
+  .attr("width", 200)
+  .attr("height", 200);
+
+const ellipseShape = ellipseSvgContainer
+  .selectAll("ellipse")
+  .data(ellipseData)
+  .enter()
+  .append("ellipse")
+  .attr("cx", (d) => d.cx)
+  .attr("cy", (d) => d.cy)
+  .attr("rx", (d) => d.rx)
+  .attr("ry", (d) => d.ry);
