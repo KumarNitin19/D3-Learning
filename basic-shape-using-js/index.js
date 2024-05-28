@@ -176,3 +176,11 @@ const ellipseShape = ellipseSvgContainer
   .attr("cy", (d) => d.cy)
   .attr("rx", (d) => d.rx)
   .attr("ry", (d) => d.ry);
+
+// const heartSvgContainer = d3
+//   .select(".heart")
+//   .append("svg")
+//   .attr("width", 200)
+//   .attr("width", 200);
+
+// const heartShape = heartSvgContainer.selectAll("")
