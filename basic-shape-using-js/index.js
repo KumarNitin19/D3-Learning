@@ -21,13 +21,71 @@ const rectData = [
   },
 ];
 
-const svgContainer = d3
+const circleData = [
+  {
+    label: "first",
+    cx: 25,
+    cy: 25,
+    r: 25,
+  },
+  {
+    label: "second",
+    cx: 75,
+    cy: 75,
+    r: 25,
+  },
+  {
+    label: "third",
+    cx: 125,
+    cy: 125,
+    r: 25,
+  },
+  {
+    label: "fourth",
+    cx: 175,
+    cy: 175,
+    r: 25,
+  },
+];
+
+const lineData = [
+  {
+    label: "first",
+    x0: 0,
+    y0: 0,
+    x1: 25,
+    y1: 25,
+  },
+  {
+    label: "second",
+    x0: 50,
+    y0: 50,
+    x1: 75,
+    y1: 75,
+  },
+  {
+    label: "third",
+    x0: 100,
+    y0: 100,
+    x1: 125,
+    y1: 125,
+  },
+  {
+    label: "fourth",
+    x0: 150,
+    y0: 150,
+    x1: 175,
+    y1: 175,
+  },
+];
+
+const rectSvgContainer = d3
   .select(".rectangle")
   .append("svg")
   .attr("width", 200)
   .attr("height", 200);
 
-const rectShape = svgContainer
+const rectShape = rectSvgContainer
   .selectAll("rect")
   .data(rectData)
   .enter()
@@ -37,3 +95,37 @@ const rectShape = svgContainer
   .attr("height", 40)
   .attr("width", 40)
   .attr("fill", "red");
+
+const circleSvgContainer = d3
+  .select(".circle")
+  .append("svg")
+  .attr("width", 200)
+  .attr("height", 200);
+
+const circleShape = circleSvgContainer
+  .selectAll("circle")
+  .data(circleData)
+  .enter()
+  .append("circle")
+  .attr("cx", (d) => d.cx)
+  .attr("cy", (d) => d.cy)
+  .attr("r", (d) => d.r)
+  .attr("fill", "red");
+
+const lineSvgContainer = d3
+  .select(".line")
+  .append("svg")
+  .attr("width", 200)
+  .attr("height", 200);
+
+const lineShape = lineSvgContainer
+  .selectAll("line")
+  .data(lineData)
+  .enter()
+  .append("line")
+  .attr("x0", (d) => d.x0)
+  .attr("y0", (d) => d.y0)
+  .attr("x1", (d) => d.x1)
+  .attr("y1", (d) => d.y1)
+  .attr("stroke-width", "2")
+  .attr("stroke", "red");
