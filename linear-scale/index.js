@@ -4,18 +4,26 @@ const myData = [
   {
     n: 0,
     p: 50,
+    r: 9,
+    fill: "red",
   },
   {
     n: 200,
     p: 125,
+    r: 24,
+    fill: "green",
   },
   {
     n: 300,
     p: 250,
+    r: 17,
+    fill: "orange",
   },
   {
     n: 400,
     p: 325,
+    r: 20,
+    fill: "yellow",
   },
 ];
 
@@ -53,4 +61,5 @@ const circle = svgViewPort
 const circleAttr = circle
   .attr("cx", (d) => xLineScale(d.n))
   .attr("cy", (d) => yLineScale(d.p))
-  .attr("r", "15");
+  .attr("r", (d) => d.r)
+  .attr("fill", (d) => d.fill);
