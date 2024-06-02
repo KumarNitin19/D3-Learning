@@ -12,18 +12,42 @@ const dataSet = [
 const svgElement = d3
   .select(".root")
   .append("svg")
-  .attr("width", "200")
-  .attr("height", "200");
+  .attr("width", "400")
+  .attr("height", "400");
+
+// const groupElement = svgElement
+//   .selectAll("circle")
+//   .data(dataSet)
+//   .enter()
+//   .append("circle")
+//   .attr("cx", (d) => 200 - d.rank * 25)
+//   .attr("cy", (d) => 50 + d.rank * 20)
+//   .attr("r", (d) => d.population)
+//   .text("text", (d) => d.name)
+//   .attr("fill", (d) => {
+//     switch (true) {
+//       case d.population > 15:
+//         return "red";
+//       case d.population > 10:
+//         return "orange";
+//       default:
+//         return "green";
+//     }
+//   });
 
 const groupElement = svgElement
-  .selectAll("circle")
+  .selectAll("g")
   .data(dataSet)
   .enter()
+  .append("g")
+  .attr(
+    "transform",
+    (d) => `translate(${d.population * 10}, ${100 + d.rank * 25})`
+  );
+
+const circleElement = groupElement
   .append("circle")
-  .attr("cx", (d) => 200 - d.rank * 25)
-  .attr("cy", (d) => 50 + d.rank * 20)
   .attr("r", (d) => d.population)
-  .text("text", (d) => d.name)
   .attr("fill", (d) => {
     switch (true) {
       case d.population > 15:
@@ -34,3 +58,5 @@ const groupElement = svgElement
         return "green";
     }
   });
+
+const textElement = groupElement.append("text").text((d) => d.name);
