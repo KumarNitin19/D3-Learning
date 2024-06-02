@@ -2,7 +2,7 @@ console.log("d3 axis");
 
 let myScale = d3.scaleLinear().domain([0, 10]).range([0, 200]);
 
-let myAxis = d3.svg.axis().scale(myScale);
+let myAxis = d3.axisBottom().scale(myScale);
 
 let mySvg = d3
   .select(".root")
