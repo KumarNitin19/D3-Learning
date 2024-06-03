@@ -32,3 +32,25 @@ const svgElementTwo = d3
   .attr("transform", `translate(${margin.bottom}, ${margin.left})`);
 
 const myAxisGroupTwo = svgElementTwo.call(myAxisTwo);
+
+// Axis with orientation  (axis_With_Orientation)
+
+const myScaleThree = d3.scaleLinear().domain([0, 10]).range([0, width]);
+const myXAxisThree = d3.axisTop().scale(myScaleThree);
+
+const myYAxisThree = d3.axisLeft().scale(myScaleThree);
+
+const svgElementThree = d3
+  .select("#axis_With_Orientation")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom);
+
+const myXAxisGroupThree = svgElementThree
+  .append("g")
+  .attr("transform", `translate(${margin.bottom}, ${margin.left})`)
+  .call(myXAxisThree);
+const myYAxisGroupThree = svgElementThree
+  .append("g")
+  .attr("transform", `translate(${margin.bottom}, ${margin.left})`)
+  .call(myYAxisThree);
