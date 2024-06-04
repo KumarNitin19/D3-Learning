@@ -63,26 +63,36 @@ const margin = {
   left: 50,
 };
 
-const xAxisScale = d3.scaleLinear().domain([0, 50]).range([0, 400]);
-const yAxisScale = d3.scaleLinear().domain([0, 20]).range([0, 400]);
+const xAxisScale = d3.scaleLinear().domain([0, 100]).range([0, 400]);
+const yAxisScale = d3.scaleLinear().domain([0, 10]).range([0, 400]);
 
 const svgViewPort = d3
   .select("#root")
   .append("svg")
-  .attr("width", width - margin.left - margin.right)
-  .attr("height", height - margin.top - margin.bottom);
+  .attr("width", width)
+  .attr("height", height);
 
-const circleGroup = svgViewPort
+const groupElement = svgViewPort
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
-const circleElement = circleGroup
+const circleGroup = groupElement
   .selectAll("circle")
   .data(cityData)
   .enter()
   .append("circle");
 
-circleElement
+circleGroup
   .attr("cx", (d) => xAxisScale(d.temprature))
   .attr("cy", (d) => yAxisScale(d.id))
-  .attr("r", (d) => 50 - d.id * 5);
+  .attr("r", (d) => 20 - d.id * 2)
+  .attr("fill", (d) => {
+    if (d.temprature > 50) return "red";
+    if (d.temprature > 47) return "orange";
+    return "yellow";
+  });
+
+const xAxis = d3.axisTop().scale(xAxisScale);
+const yAxis = d3.axisLeft().scale(yAxisScale);
+groupElement.append("g").call(xAxis);
+groupElement.append("g").call(yAxis);
