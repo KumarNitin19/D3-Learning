@@ -71,3 +71,13 @@ const svgViewPort = d3
   .append("svg")
   .attr("width", width - margin.left - margin.right)
   .attr("height", height - margin.top - margin.bottom);
+
+const circleGroup = svgViewPort
+  .append("g")
+  .attr("transform", `translate(${margin.left},${margin.top})`);
+
+const circleElement = circleGroup
+  .selectAll("circle")
+  .data(cityData)
+  .enter()
+  .append("circle");
