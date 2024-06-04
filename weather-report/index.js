@@ -52,3 +52,22 @@ const cityData = [
     temprature: 46,
   },
 ];
+
+const width = 500;
+const height = 500;
+
+const margin = {
+  top: 50,
+  right: 50,
+  bottom: 50,
+  left: 50,
+};
+
+const xAxis = d3.scaleLinear().domain([0, 50]).range([0, 400]);
+const yAxis = d3.scaleLinear().domain([0, 20]).range([0, 400]);
+
+const svgViewPort = d3
+  .select("#root")
+  .append("svg")
+  .attr("width", width - margin.left - margin.right)
+  .attr("height", height - margin.top - margin.bottom);
