@@ -106,7 +106,7 @@ const textElemnt = groupElement
   .append("text");
 
 textElemnt
-  .attr("x", (d) => xAxisScale(d.temprature))
+  .attr("x", (d) => xAxisScale(d.temprature) + 20)
   .attr("y", (d) => yAxisScale(d.id))
   .attr("font-size", "12")
   .text((d) => d.area);
