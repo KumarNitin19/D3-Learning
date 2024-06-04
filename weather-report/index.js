@@ -63,8 +63,8 @@ const margin = {
   left: 50,
 };
 
-const xAxis = d3.scaleLinear().domain([0, 50]).range([0, 400]);
-const yAxis = d3.scaleLinear().domain([0, 20]).range([0, 400]);
+const xAxisScale = d3.scaleLinear().domain([0, 50]).range([0, 400]);
+const yAxisScale = d3.scaleLinear().domain([0, 20]).range([0, 400]);
 
 const svgViewPort = d3
   .select("#root")
@@ -81,3 +81,8 @@ const circleElement = circleGroup
   .data(cityData)
   .enter()
   .append("circle");
+
+circleElement
+  .attr("cx", (d) => xAxisScale(d.temprature))
+  .attr("cy", (d) => yAxisScale(d.id))
+  .attr("r", (d) => 50 - d.id * 5);
