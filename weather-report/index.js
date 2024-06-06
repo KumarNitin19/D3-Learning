@@ -109,7 +109,7 @@ textElemnt
   .attr("x", (d) => xAxisScale(d.temprature) + 20)
   .attr("y", (d) => yAxisScale(d.id))
   .attr("font-size", "12")
-  .text((d) => d.area)
+  .text((d) => `${d.area} - ${d.temprature}C`)
   .attr("fill", (d) => {
     if (d.temprature > 50) return "red";
     if (d.temprature > 47) return "orange";
