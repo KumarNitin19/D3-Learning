@@ -10,7 +10,7 @@ const width = 960 - margin.left - margin.right;
 const parseDate = d3.timeParse("%Y-%m-%d");
 
 const x = d3.scaleTime().range([0, width]);
-const y = d3.scaleTime().range([0, height]);
+const y = d3.scaleLinear().range([height, 0]);
 
 const xAxis = d3.axisBottom().scale(x);
 const yAxis = d3.axisLeft().scale(y);
@@ -35,7 +35,7 @@ d3.csv(
   },
   function (data) {
     x.domain(d3.extent(data, (d) => d.date));
-    y.domain(d3.extent(data, (d) => d.close));
+    y.domain(d3.extent(data, (d) => d.value));
 
     svg
       .append("g")
@@ -51,7 +51,16 @@ d3.csv(
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
+      .attr("fill", "steelblue")
       .style("text-anchor", "end")
       .text("Price ($)");
+
+    svg
+      .append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 1.5)
+      .attr("d", line);
   }
 );
