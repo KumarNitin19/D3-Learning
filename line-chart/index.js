@@ -18,7 +18,7 @@ const yAxis = d3.axisLeft().scale(y);
 const line = d3
   .line()
   .x((d) => x(d.date))
-  .y((d) => x(d.value));
+  .y((d) => y(d.value));
 
 const svg = d3
   .select("#root")
@@ -31,11 +31,11 @@ const svg = d3
 d3.csv(
   csvFileUrl,
   function (d) {
-    return { date: parseDate(d.date), value: d.value };
+    return { date: parseDate(d.date), value: +d.value };
   },
   function (data) {
     x.domain(d3.extent(data, (d) => d.date));
-    y.domain(d3.extent(data, (d) => d.value));
+    y.domain([0, d3.max(data, (d) => d.value)]);
 
     svg
       .append("g")
