@@ -75,6 +75,27 @@ d3.csv(
       .attr("cy", (d) => y(d.salePrice))
       .attr("fill", (d) => color(d.speices));
 
-    // const legend = svg.selectAll(".legent")
+    const legend = svg
+      .selectAll(".legend")
+      .data(color.domain())
+      .enter()
+      .append("g")
+      .attr("class", "legend")
+      .attr("transform", (d, index) => `translate(0,${index * 20})`);
+
+    legend
+      .append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .attr("fill", color);
+
+    legend
+      .append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text("Scatter Plot");
   }
 );
