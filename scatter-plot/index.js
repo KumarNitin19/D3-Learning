@@ -38,8 +38,8 @@ d3.csv(
     };
   },
   function (data) {
-    x.domain([0, d3.max(data, (d) => d.grLivArea) + 500]);
-    y.domain([0, d3.max(data, (d) => d.salePrice)]);
+    x.domain([0, 4000]);
+    y.domain([0, 500000]);
 
     svg
       .append("g")
@@ -63,5 +63,18 @@ d3.csv(
       .attr("y", 6)
       .attr("dy", ".71em")
       .text("Sale Price");
+
+    svg
+      .selectAll(".dot")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("class", "dot")
+      .attr("r", "3.5")
+      .attr("cx", (d) => x(d.grLivArea))
+      .attr("cy", (d) => y(d.salePrice))
+      .attr("fill", (d) => color(d.speices));
+
+    // const legend = svg.selectAll(".legent")
   }
 );
