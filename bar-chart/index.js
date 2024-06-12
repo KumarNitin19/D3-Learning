@@ -38,7 +38,7 @@ d3.csv(
   },
   function (data) {
     x.domain(data.map((d) => d.country)).padding(0.2);
-    y.domain([0, d3.max(data, (d) => d.value)]);
+    y.domain([0, d3.max(data, (d) => d.value) + 1000]);
     svg
       .append("g")
       .attr("class", "x axis")
@@ -57,6 +57,15 @@ d3.csv(
       .text("Frequency")
       .attr("fill", "red");
 
-    svg.selectAll(".bar").data(data).enter().append("rect");
+    svg
+      .selectAll(".bar")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("x", (d) => x(d.country))
+      .attr("y", (d) => y(d.value))
+      .attr("height", (d) => height - y(d.value))
+      .attr("width", x.bandwidth())
+      .attr("fill", "#69b3a2");
   }
 );
