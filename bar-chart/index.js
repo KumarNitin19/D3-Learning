@@ -1,5 +1,8 @@
 console.log("Bar Chart");
 
+const csvDataUrl =
+  "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv";
+
 const margin = {
   top: 50,
   right: 50,
@@ -24,3 +27,14 @@ const svg = d3
   .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom);
+
+d3.csv(
+  csvDataUrl,
+  function (d) {
+    return d;
+  },
+  function (data) {
+    x.domain(data.map((d) => d.Country));
+    svg.append("g").attr("transform", `translate(0,${height})`).call(xAxis);
+  }
+);
