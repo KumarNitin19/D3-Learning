@@ -13,28 +13,50 @@ const margin = {
 const width = 960 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
-const formatPercent = d3.format(".0%");
-
-const x = d3.scaleBand().rangeRound([0, width], 0.1);
+const x = d3.scaleBand().range([0, width]);
 
 const y = d3.scaleLinear().range([height, 0]);
 
 const xAxis = d3.axisBottom().scale(x);
-const yAxis = d3.axisLeft().scale(y).tickFormat(formatPercent);
+const yAxis = d3.axisLeft().scale(y);
 
 const svg = d3
   .select("#root")
   .append("svg")
   .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom);
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 d3.csv(
   csvDataUrl,
   function (d) {
-    return d;
+    return {
+      country: d.Country,
+      value: +d.Value,
+    };
   },
   function (data) {
-    x.domain(data.map((d) => d.Country));
-    svg.append("g").attr("transform", `translate(0,${height})`).call(xAxis);
+    x.domain(data.map((d) => d.country)).padding(0.2);
+    y.domain([0, d3.max(data, (d) => d.value)]);
+    svg
+      .append("g")
+      .attr("class", "x axis")
+      .attr("transform", `translate(0,${height})`)
+      .call(xAxis);
+
+    svg
+      .append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .attr("text-anchor", "end")
+      .text("Frequency")
+      .attr("fill", "red");
+
+    svg.selectAll(".bar").data(data).enter().append("rect");
   }
 );
