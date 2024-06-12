@@ -18,3 +18,9 @@ const y = d3.scaleLinear().range([height, 0]);
 
 const xAxis = d3.axisBottom().scale(x);
 const yAxis = d3.axisLeft().scale(y).tickFormat(formatPercent);
+
+const svg = d3
+  .select("#root")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom);
