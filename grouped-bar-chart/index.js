@@ -12,3 +12,10 @@ const margin = {
 
 const width = 960 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
+
+const x0 = d3.scaleBand().range([0, width]).padding([0.1]);
+const x1 = d3.scaleBand();
+const y = d3.scaleLinear().range([height, 0]);
+
+const xAxis = d3.axisBottom().scale(x0);
+const yAxis = d3.axisLeft().scale(y);
