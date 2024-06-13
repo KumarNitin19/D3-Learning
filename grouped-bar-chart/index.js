@@ -19,3 +19,11 @@ const y = d3.scaleLinear().range([height, 0]);
 
 const xAxis = d3.axisBottom().scale(x0);
 const yAxis = d3.axisLeft().scale(y);
+
+const svg = d3
+  .select("#root")
+  .append("svg")
+  .attr("height", height + margin.top + margin.bottom)
+  .attr("width", width + margin.left + margin.right)
+  .append("g")
+  .attr("transform", `translate(${margin.left}, ${margin.top})`);
