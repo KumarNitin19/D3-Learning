@@ -50,5 +50,7 @@ d3.csv(
   function (data) {
     x.domain(d3.extent(data, (d) => d.date));
     y.domain([0, d3.max(data, (d) => d.value) + 500]);
+
+    svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
   }
 );
