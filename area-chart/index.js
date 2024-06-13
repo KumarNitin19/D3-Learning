@@ -18,3 +18,13 @@ const y = d3.scaleLinear().range([height, 0]);
 
 const xAxis = d3.axisBottom().scale(x);
 const yAxis = d3.axisLeft().scale(y);
+
+const area = d3
+  .area()
+  .x(function (d) {
+    return x(d.date);
+  })
+  .y0(y(0))
+  .y1(function (d) {
+    return y(d.value);
+  });
