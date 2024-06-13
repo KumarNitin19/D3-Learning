@@ -19,6 +19,8 @@ const y = d3.scaleLinear().range([height, 0]);
 const xAxis = d3.axisBottom().scale(x);
 const yAxis = d3.axisLeft().scale(y);
 
+const parseDate = d3.timeParse("%Y-%m-%d");
+
 const area = d3
   .area()
   .x(function (d) {
@@ -36,3 +38,17 @@ const svg = d3
   .attr("width", width + margin.left + margin.right)
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
+
+d3.csv(
+  csvDataUrl,
+  function (d) {
+    return {
+      date: parseDate(d.date),
+      value: d.value,
+    };
+  },
+  function (data) {
+    x.domain(d3.extent(data, (d) => d.date));
+    y.domain([0, d3.max(data, (d) => d.value) + 500]);
+  }
+);
