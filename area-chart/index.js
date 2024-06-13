@@ -44,13 +44,36 @@ d3.csv(
   function (d) {
     return {
       date: parseDate(d.date),
-      value: d.value,
+      value: +d.value,
     };
   },
   function (data) {
     x.domain(d3.extent(data, (d) => d.date));
     y.domain([0, d3.max(data, (d) => d.value) + 500]);
 
-    svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
+    svg
+      .append("g")
+      .attr("class", "x axis")
+      .attr("transform", `translate(0, ${height})`)
+      .call(xAxis);
+
+    svg
+      .append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .append("text")
+      .attr("transform", `rotate(-90)`)
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .attr("fill", "red")
+      .text("Price ($)");
+
+    svg
+      .append("path")
+      .datum(data)
+      .attr("d", area)
+      .attr("fill", "#cce5df")
+      .attr("stroke", "#69b3a2")
+      .attr("stroke-width", 1.5);
   }
 );
