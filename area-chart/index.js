@@ -28,3 +28,11 @@ const area = d3
   .y1(function (d) {
     return y(d.value);
   });
+
+const svg = d3
+  .select("#root")
+  .append("svg")
+  .attr("height", height + margin.top + margin.bottom)
+  .attr("width", width + margin.left + margin.right)
+  .append("g")
+  .attr("transform", `translate(${margin.left},${margin.top})`);
