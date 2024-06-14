@@ -33,5 +33,6 @@ d3.csv(csvDataUrl, function (data) {
   const subgroups = data?.columns?.slice(1);
   const groups = data.map((d) => d.group);
 
-  x.domain(d3.extent(data, (d) => d.group));
+  x.domain(groups);
+  svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
 });
