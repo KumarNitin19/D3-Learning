@@ -34,5 +34,21 @@ d3.csv(csvDataUrl, function (data) {
   const groups = data.map((d) => d.group);
 
   x.domain(groups);
-  svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
+  y.domain([0, 60]);
+  svg
+    .append("g")
+    .attr("class", "x axis")
+    .attr("transform", `translate(0, ${height})`)
+    .call(xAxis);
+
+  svg
+    .append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .attr("fill", "red")
+    .text("Price ($)");
 });
