@@ -19,7 +19,7 @@ const y = d3.scaleLinear().range([height, 0]);
 const xAxis = d3.axisBottom().scale(x);
 const yAxis = d3.axisLeft().scale(y);
 
-const color = d3.scaleOrdinal().range(["#fb692", "#fcfc99", "#79de79"]);
+const color = d3.scaleOrdinal().range(["#fb6962", "#fcfc99", "#79de79"]);
 
 const svg = d3
   .select("#root")
@@ -51,4 +51,25 @@ d3.csv(csvDataUrl, function (data) {
     .attr("dy", ".71em")
     .attr("fill", "red")
     .text("Price ($)");
+
+  const stackedData = d3.stack().keys(subgroups)(data);
+
+  svg
+    .append("g")
+    .selectAll("g")
+    .data(stackedData)
+    .enter()
+    .append("g")
+    .attr("fill", (d) => color(d.key))
+    .selectAll("rect")
+    .data((d) => d)
+    .enter()
+    .append("rect")
+    .attr("x", (d) => x(d.data.group))
+    .attr("y", (d) => y(d[1]))
+    .attr("width", x.bandwidth())
+    .attr("height", (d) => {
+      console.log(d[0], d[1]);
+      return y(d[0]) - y(d[1]);
+    });
 });
