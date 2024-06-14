@@ -19,6 +19,8 @@ const y = d3.scaleLinear().range([height, 0]);
 const xAxis = d3.axisBottom().scale(x);
 const yAxis = d3.axisLeft().scale(y);
 
+const color = d3.scaleOrdinal().range(["#fb692", "#fcfc99", "#79de79"]);
+
 const svg = d3
   .select("#root")
   .append("svg")
@@ -26,3 +28,10 @@ const svg = d3
   .attr("height", height + margin.top + margin.bottom)
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+d3.csv(csvDataUrl, function (data) {
+  const subgroups = data?.columns?.slice(1);
+  const groups = data.map((d) => d.group);
+
+  x.domain(d3.extent(data, (d) => d.group));
+});
