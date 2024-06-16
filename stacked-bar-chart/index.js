@@ -68,8 +68,5 @@ d3.csv(csvDataUrl, function (data) {
     .attr("x", (d) => x(d.data.group))
     .attr("y", (d) => y(d[1]))
     .attr("width", x.bandwidth())
-    .attr("height", (d) => {
-      console.log(d[0], d[1]);
-      return y(d[0]) - y(d[1]);
-    });
+    .attr("height", (d) => y(d[0]) - y(d[1]));
 });
