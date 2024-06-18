@@ -20,4 +20,4 @@ const svg = d3
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-console.log("test");
+// console.log("test");
