@@ -19,3 +19,5 @@ const svg = d3
   .attr("width", width + margin.left + margin.right)
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+console.log("fhdj");
