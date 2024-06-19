@@ -24,12 +24,14 @@ const svg = d3
 const pie = d3.pie().value((d) => d.value);
 const dataReady = pie(d3.entries(pieChartData));
 
+const arc = d3.arc().innerRadius(0).outerRadius(radius);
+
 svg
   .selectAll(".arc")
   .data(dataReady)
   .enter()
   .append("path")
-  .attr("d", d3.arc().innerRadius(0).outerRadius(radius))
+  .attr("d", arc)
   .attr("fill", (d) => color(d.data.key))
   .attr("stroke", "white")
   .attr("stroke-width", 2)
@@ -41,11 +43,7 @@ svg
   .enter()
   .append("text")
   .text((d) => `grp: ${d.data.key}`)
-  .attr(
-    "transform",
-    (d) =>
-      `translate(${d3.arc().innerRadius(0).outerRadius(radius).centroid(d)})`
-  )
+  .attr("transform", (d) => `translate(${arc.centroid(d)})`)
   .attr("text-anchor", "middle")
   .attr("font-size", 16);
 
