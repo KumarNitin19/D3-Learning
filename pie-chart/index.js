@@ -35,4 +35,18 @@ svg
   .attr("stroke-width", 2)
   .attr("opcaity", 0.7);
 
+svg
+  .selectAll("slices")
+  .data(dataReady)
+  .enter()
+  .append("text")
+  .text((d) => `grp: ${d.data.key}`)
+  .attr(
+    "transform",
+    (d) =>
+      `translate(${d3.arc().innerRadius(0).outerRadius(radius).centroid(d)})`
+  )
+  .attr("text-anchor", "middle")
+  .attr("font-size", 16);
+
 // console.log("test");
