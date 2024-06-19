@@ -45,6 +45,7 @@ svg
   .text((d) => `grp: ${d.data.key}`)
   .attr("transform", (d) => `translate(${arc.centroid(d)})`)
   .attr("text-anchor", "middle")
-  .attr("font-size", 16);
+  .attr("font-size", 16)
+  .attr("fill", "white");
 
 // console.log("test");
