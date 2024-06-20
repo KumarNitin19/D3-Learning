@@ -30,3 +30,26 @@ const svg = d3
   .attr("width", width + margin.left + margin.right)
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+svg
+  .selectAll(".bar")
+  .data(barChartData)
+  .enter()
+  .append("rect")
+  .attr("class", "bar")
+  .attr("x", (d) => x(Math.min(0, d)))
+  .attr("y", (d, i) => y(i))
+  .attr("width", (d) => Math.abs(x(d) - x(0)))
+  .attr("height", y.bandwidth())
+  .attr("fill", (d) => (d > 0 ? "green" : "red"))
+  .attr("stroke-width", 2);
+
+svg.append("g").call(xAxis);
+
+svg
+  .append("g")
+  .append("line")
+  .attr("x1", x(0))
+  .attr("x2", x(0))
+  .attr("y1", 0)
+  .attr("y2", height);
