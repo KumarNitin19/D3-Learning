@@ -52,4 +52,6 @@ svg
   .attr("x1", x(0))
   .attr("x2", x(0))
   .attr("y1", 0)
-  .attr("y2", height);
+  .attr("y2", height)
+  .attr("stroke", "black")
+  .attr("stroke-width", 1);
