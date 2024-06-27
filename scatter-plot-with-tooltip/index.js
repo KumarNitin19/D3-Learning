@@ -76,5 +76,33 @@ d3.csv(
       .attr("cx", (d) => x(d.grLivArea))
       .attr("cy", (d) => y(d.salePrice))
       .attr("fill", (d) => color(d.speices));
+
+    const div = d3
+      .select("#root")
+      .append("div")
+      .style("position", "absolute")
+      .style("background", "black")
+      .style("color", "yellow")
+      .style("text-align", "center")
+      .style("width", "fit-content")
+      .style("height", "fit-content")
+      .style("font", "0.7em sans-serif")
+      .style("border-radius", "8px")
+      .style("padding", "8px")
+      .style("opacity", 0);
+
+    function mouseOver(d) {
+      div
+        .text("Sales Price :" + d.salePrice)
+        .style("left", event.pageX + 9 + "px")
+        .style("top", event.pageY - 43 + "px")
+        .style("opacity", 1);
+    }
+
+    function mouseOut() {
+      div.style("opacity", 1e-6);
+    }
+
+    d3.selectAll(".dot").on("mouseover", mouseOver).on("mouseout", mouseOut);
   }
 );
