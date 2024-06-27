@@ -65,5 +65,16 @@ d3.csv(
       .attr("dy", ".71em")
       .attr("fill", "red")
       .text("Sale Price");
+
+    svg
+      .selectAll(".dot")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("class", "dot")
+      .attr("r", "3.5")
+      .attr("cx", (d) => x(d.grLivArea))
+      .attr("cy", (d) => y(d.salePrice))
+      .attr("fill", (d) => color(d.speices));
   }
 );
