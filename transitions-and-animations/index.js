@@ -38,3 +38,25 @@ const circleButton = document.getElementById("circle_button");
 circleButton.addEventListener("click", () => {
   d3.select(".circle_shape").transition().duration(2000).attr("r", 80);
 });
+
+d3.select("#ellipse")
+  .append("svg")
+  .attr("width", 300)
+  .attr("height", 200)
+  .style("border", "1px solid")
+  .append("ellipse")
+  .attr("class", "ellipse_shape")
+  .attr("cx", 150)
+  .attr("cy", 100)
+  .attr("rx", 75)
+  .attr("ry", 50)
+  .attr("fill", "red");
+
+const ellipseButton = document.getElementById("ellipse_button");
+ellipseButton.addEventListener("click", () => {
+  d3.select(".ellipse_shape")
+    .transition()
+    .duration(2000)
+    .attr("rx", 100)
+    .attr("ry", 75);
+});
