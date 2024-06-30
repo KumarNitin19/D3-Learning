@@ -5,10 +5,12 @@ d3.select("#rect")
   .attr("height", 200)
   .attr("width", 300)
   .style("border", "1px solid black")
+  .append("g")
+  .attr("transform", "translate(10, 10)")
   .append("rect")
   .attr("class", "rect_shape")
-  .attr("x", 10)
-  .attr("y", 10)
+  .attr("x", 0)
+  .attr("y", 0)
   .attr("height", 50)
   .attr("width", 50)
   .attr("fill", "red");
@@ -18,8 +20,8 @@ rectButton.addEventListener("click", () => {
   d3.select(".rect_shape")
     .transition()
     .duration(2000)
-    .attr("x", 240)
-    .attr("y", 140);
+    .attr("x", 230)
+    .attr("y", 130);
 });
 
 d3.select("#circle")
@@ -66,10 +68,12 @@ d3.select("#line")
   .attr("width", 300)
   .attr("height", 200)
   .style("border", "1px solid")
+  .append("g")
+  .attr("transform", "translate(10, 10)")
   .append("line")
   .attr("class", "line_shape")
-  .attr("x0", 10)
-  .attr("y0", 10)
+  .attr("x0", 0)
+  .attr("y0", 0)
   .attr("x1", 30)
   .attr("y1", 30)
   .attr("stroke", "red")
@@ -81,6 +85,6 @@ lineButton.addEventListener("click", () => {
   d3.select(".line_shape")
     .transition()
     .duration(2000)
-    .attr("x1", 290)
-    .attr("y1", 190);
+    .attr("x1", 280)
+    .attr("y1", 180);
 });
