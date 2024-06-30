@@ -60,3 +60,27 @@ ellipseButton.addEventListener("click", () => {
     .attr("rx", 100)
     .attr("ry", 75);
 });
+
+d3.select("#line")
+  .append("svg")
+  .attr("width", 300)
+  .attr("height", 200)
+  .style("border", "1px solid")
+  .append("line")
+  .attr("class", "line_shape")
+  .attr("x0", 10)
+  .attr("y0", 10)
+  .attr("x1", 30)
+  .attr("y1", 30)
+  .attr("stroke", "red")
+  .attr("stroke-width", 2);
+
+const lineButton = document.getElementById("line_button");
+
+lineButton.addEventListener("click", () => {
+  d3.select(".line_shape")
+    .transition()
+    .duration(2000)
+    .attr("x1", 290)
+    .attr("y1", 190);
+});
