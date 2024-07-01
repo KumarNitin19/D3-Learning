@@ -34,12 +34,33 @@ const margin = {
   left: 30,
 };
 
-const width = 960 - margin.right - margin.left;
-const height = 500 - margin.top - margin.bottom;
+const width = 300 - margin.right - margin.left;
+const height = 300 - margin.top - margin.bottom;
 
 const seasonNames = chartData.map((d) => d.season);
-const fruitNames = d3.keys(chartData[0]).filter((d) => d !== "season");
-console.log(fruitNames);
+const fruitNames = d3.keys(chartData[0]).filter((key) => key !== "season");
+
+chartData.forEach((d) => {
+  d.fruitsConsumed = fruitNames.map((name) => ({
+    fruitName: name,
+    consumedCount: d[name],
+  }));
+  d.totalFruit = d3.sum(d.fruitsConsumed, (d) => d.consumedCount);
+});
+
+const x = d3.scaleBand().domain(seasonNames).range([0, width]).padding([0.2]);
+const y = d3
+  .scaleLinear()
+  .domain([0, d3.max(chartData, (d) => d.totalFruit)])
+  .range([height, 0]);
+
+const color = d3
+  .scaleOrdinal()
+  .domain(fruitNames)
+  .range(["#d62728", "#2ca02c", "#9467bd"]);
+
+const xAxis = d3.axisBottom().scale(x).tickSizeOuter(0);
+const yAxis = d3.axisLeft().scale(y);
 
 const svg = d3
   .select("#root")
@@ -48,3 +69,42 @@ const svg = d3
   .attr("height", height + margin.top + margin.bottom)
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+svg
+  .append("g")
+  .attr("class", "x axis")
+  .attr("transform", `translate(0, ${height})`)
+  .call(xAxis);
+
+svg.append("g").attr("class", "y axis").call(yAxis);
+
+const layers = fruitNames.map((name) => {
+  return chartData.map((d) => ({
+    x: x(d.season),
+    y: d[name],
+    fruitName: name,
+  }));
+});
+
+const stack = d3.stack().keys(fruitNames)(chartData);
+
+console.log(stack, layers);
+
+const svgLayer = svg
+  .append("g")
+  .selectAll(".layer")
+  .data(stack)
+  .enter()
+  .append("g")
+  .attr("class", "layer");
+
+svgLayer
+  .selectAll("rect")
+  .data((d) => d)
+  .enter()
+  .append("rect")
+  .attr("x", (d) => d.x)
+  .attr("y", (d) => y(d.y + d.y0))
+  .attr("width", x.bandwidth())
+  .attr("height", (d) => height - y(d.y))
+  .attr("fill", (d) => color(d.fruitName));
