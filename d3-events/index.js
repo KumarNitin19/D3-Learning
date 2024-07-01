@@ -48,3 +48,14 @@ svg
   .attr("y", (d) => d.y)
   .attr("width", (d) => d.width)
   .attr("height", (d) => d.height);
+
+d3.selectAll("rect").on("mouseover", function (d) {
+  d3.selectAll("rect").attr("opacity", 0.5);
+  d3.select(this)
+    .attr("opacity", 1)
+    .style("fill", (d) => d.color);
+});
+
+d3.selectAll("rect").on("mouseout", (d) => {
+  d3.selectAll("rect").attr("opacity", 1).style("fill", "black");
+});
