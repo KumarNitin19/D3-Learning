@@ -29,7 +29,7 @@ const x = d3
   .domain(["minutes", "seconds"])
   .range([0, width])
   .padding(0.2);
-const y = d3.scaleLinear().range([height, 0]).domain([0, 60]);
+const y = d3.scaleLinear().range([height, 0]).domain([0, 60]).nice();
 
 const xAxis = d3.axisBottom().scale(x);
 const yAxis = d3.axisLeft().scale(y);
