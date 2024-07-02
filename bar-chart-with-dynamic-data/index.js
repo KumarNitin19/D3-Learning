@@ -58,8 +58,28 @@ svg
   .data(chartData, (d) => d.timeUnit)
   .enter()
   .append("rect")
+  .attr("class", "bar")
   .attr("x", (d) => x(d.timeUnit))
   .attr("y", (d) => y(d.timeData))
   .attr("width", x.bandwidth())
   .attr("height", (d) => height - y(d.timeData))
   .attr("fill", "steelblue");
+
+function reDraw() {
+  const chartData = updateData();
+
+  d3.selectAll(".bar")
+    .data(chartData, (d) => d.timeUnit)
+    .transition()
+    .duration(1000)
+    .attr("x", (d) => x(d.timeUnit))
+    .attr("y", (d) => y(d.timeData))
+    .attr("width", x.bandwidth())
+    .attr("height", (d) => height - y(d.timeData))
+    .attr("fill", "red");
+}
+
+const timeout = setTimeout(() => {
+  reDraw();
+  clearTimeout(timeout);
+}, 2000);
