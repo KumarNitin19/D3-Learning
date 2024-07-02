@@ -33,9 +33,7 @@ const xAxis = d3
   .tickSizeOuter(0)
   .tickFormat(() => "");
 
-const color = d3
-  .scaleSequential(d3.interpolatePuBu)
-  .domain([-0.5 * n, 1.5 * n]);
+const color = d3.scaleSequential(d3.interpolateRdBu).domain([0.5 * n, 1.5 * n]);
 
 const svg = d3
   .select("#root")
@@ -89,12 +87,16 @@ function transitionStacked() {
     .attr("width", x.bandwidth());
 }
 
-transitionStacked();
+d3.selectAll("input").on("change", function () {
+  const value = this.value;
+  if (value === "stacked") {
+    transitionStacked();
+  } else if (value === "group") {
+    transitionGrouped();
+  }
+});
 
-const timeout = setTimeout(() => {
-  transitionGrouped();
-  clearTimeout(timeout);
-}, 2000);
+transitionStacked();
 
 // function for creating fake data
 function bumps(m) {
