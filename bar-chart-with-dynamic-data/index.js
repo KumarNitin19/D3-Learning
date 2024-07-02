@@ -24,8 +24,12 @@ const margin = {
 const width = 960 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
-const x = d3.scaleBand().domain(["minutes", "seconds"]).range([0, width], 0.1);
-const y = d3.scaleLinear().range([height, 0]);
+const x = d3
+  .scaleBand()
+  .domain(["minutes", "seconds"])
+  .range([0, width])
+  .padding(0.2);
+const y = d3.scaleLinear().range([height, 0]).domain([0, 60]);
 
 const xAxis = d3.axisBottom().scale(x);
 const yAxis = d3.axisLeft().scale(y);
@@ -45,3 +49,17 @@ svg
   .call(xAxis);
 
 svg.append("g").attr("class", "y axis").call(yAxis);
+
+const chartData = updateData();
+console.log(chartData);
+svg
+  .append("g")
+  .selectAll("rect")
+  .data(chartData, (d) => d.timeUnit)
+  .enter()
+  .append("rect")
+  .attr("x", (d) => x(d.timeUnit))
+  .attr("y", (d) => y(d.timeData))
+  .attr("width", x.bandwidth())
+  .attr("height", (d) => height - y(d.timeData))
+  .attr("fill", "steelblue");
