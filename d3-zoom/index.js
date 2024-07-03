@@ -22,18 +22,26 @@ const svg = d3
   .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
-  .style("border", "2px solid");
-
-const graphWrapper = svg
+  .style("border", "2px solid")
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
-const x_axis = graphWrapper
+svg
+  .append("g")
+  .attr("class", "rectangle")
+  .append("rect")
+  .attr("x", 0)
+  .attr("y", 0)
+  .attr("width", x(width))
+  .attr("height", y(0))
+  .style("fill", "white");
+
+const x_axis = svg
   .append("g")
   .attr("class", "x-axis")
   .attr("transform", `translate(0, ${height})`)
   .call(xAxis);
-const y_axis = graphWrapper.append("g").attr("class", "y-axis").call(yAxis);
+const y_axis = svg.append("g").attr("class", "y-axis").call(yAxis);
 
 function zoomFunction() {
   const newXAxis = d3.event.transform.rescaleX(x);
@@ -56,11 +64,8 @@ function zoomFunction() {
 
 const zoom = d3.zoom().scaleExtent([0.5, 5]).on("zoom", zoomFunction);
 
-svg.call(zoom);
-
-const innerSpace = graphWrapper.append("g");
-
-innerSpace
+svg
+  .append("g")
   .selectAll("circle")
   .data([{ x: 40, y: 40 }])
   .enter()
@@ -70,6 +75,8 @@ innerSpace
   .attr("cy", (d) => y(d.y))
   .attr("r", radius)
   .attr("fill", "red");
+
+svg.call(zoom);
 
 const rootElement = d3.select("body");
 rootElement.append("div").attr("id", "pan_x").text("Pan X: ");
