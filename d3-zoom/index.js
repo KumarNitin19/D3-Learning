@@ -7,6 +7,8 @@ const margin = {
   left: 30,
 };
 
+const radius = 25;
+
 const height = 300 - margin.top - margin.bottom;
 const width = 300 - margin.left - margin.right;
 const x = d3.scaleLinear().domain([0, 100]).range([0, width]);
@@ -46,7 +48,10 @@ function zoomFunction() {
 
   const circle = d3.select("#circle");
 
-  circle.attr("cx", (d) => newXAxis(d.x)).attr("cy", (d) => newYAxis(d.y));
+  circle
+    .attr("cx", (d) => newXAxis(d.x))
+    .attr("cy", (d) => newYAxis(d.y))
+    .attr("r", radius * scale.k);
 }
 
 const zoom = d3.zoom().scaleExtent([0.5, 5]).on("zoom", zoomFunction);
@@ -63,7 +68,7 @@ innerSpace
   .attr("id", "circle")
   .attr("cx", (d) => x(d.x))
   .attr("cy", (d) => y(d.y))
-  .attr("r", 25)
+  .attr("r", radius)
   .attr("fill", "red");
 
 const rootElement = d3.select("body");
