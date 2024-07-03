@@ -38,6 +38,15 @@ function zoomFunction() {
   const newYAxis = d3.event.transform.rescaleY(y);
   x_axis.transition().duration(0).call(xAxis.scale(newXAxis));
   y_axis.transition().duration(0).call(yAxis.scale(newYAxis));
+
+  const scale = d3.event.transform;
+  d3.select("#pan_x_value").text(Math.floor(scale.x));
+  d3.select("#pan_y_value").text(Math.floor(scale.y));
+  d3.select("#d3_zoom_value").text(scale.k);
+
+  const circle = d3.select("#circle");
+
+  circle.attr("cx", (d) => newXAxis(d.x)).attr("cy", (d) => newYAxis(d.y));
 }
 
 const zoom = d3.zoom().scaleExtent([0.5, 5]).on("zoom", zoomFunction);
@@ -51,7 +60,29 @@ innerSpace
   .data([{ x: 40, y: 40 }])
   .enter()
   .append("circle")
+  .attr("id", "circle")
   .attr("cx", (d) => x(d.x))
   .attr("cy", (d) => y(d.y))
   .attr("r", 25)
   .attr("fill", "red");
+
+const rootElement = d3.select("body");
+rootElement.append("div").attr("id", "pan_x").text("Pan X: ");
+rootElement.append("div").attr("id", "pan_y").text("Pan Y: ");
+rootElement.append("div").attr("id", "zoom_scale").text("D3 Zoom Scale: ");
+
+d3.select("#pan_x")
+  .append("span")
+  .attr("id", "pan_x_value")
+  .text("0")
+  .style("color", "grey");
+d3.select("#pan_y")
+  .append("span")
+  .attr("id", "pan_y_value")
+  .text("0")
+  .style("color", "grey");
+d3.select("#zoom_scale")
+  .append("span")
+  .attr("id", "d3_zoom_value")
+  .text("1")
+  .style("color", "grey");
