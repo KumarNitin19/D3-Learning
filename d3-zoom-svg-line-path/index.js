@@ -35,7 +35,30 @@ const svg = d3
 
 svg
   .append("g")
+  .attr("class", "rectangle")
+  .append("rect")
+  .attr("x", 0)
+  .attr("y", 0)
+  .attr("width", x(width))
+  .attr("height", y(0))
+  .style("fill", "white");
+
+const x_axis = svg
+  .append("g")
   .attr("class", "x-axis")
   .attr("transform", `translate(0, ${height})`)
   .call(xAxis);
-svg.append("g").attr("class", "y-axis").call(yAxis);
+const y_axis = svg.append("g").attr("class", "y-axis").call(yAxis);
+
+svg
+  .append("g")
+  .selectAll("line")
+  .data([originalLine])
+  .enter()
+  .append("line")
+  .attr("x1", (d) => x(d.x1))
+  .attr("y1", (d) => y(d.y1))
+  .attr("x2", (d) => x(d.x2))
+  .attr("y2", (d) => y(d.y2))
+  .attr("stroke-width", (d) => d["stroke-width"])
+  .attr("stroke", "red");
