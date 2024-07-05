@@ -1,10 +1,10 @@
 console.log("d3 zoom svg lines and svg path");
 
 const margin = {
-  top: 20,
-  right: 20,
-  bottom: 20,
-  left: 20,
+  top: 40,
+  right: 40,
+  bottom: 40,
+  left: 40,
 };
 
 const height = 500 - margin.top - margin.bottom;
@@ -18,9 +18,24 @@ const originalLine = {
   ["stroke-width"]: 2,
 };
 
+const x = d3.scaleLinear().domain([0, width]).range([0, width]);
+const y = d3.scaleLinear().domain([0, height]).range([height, 0]);
+
+const xAxis = d3.axisBottom().scale(x);
+const yAxis = d3.axisLeft().scale(y);
+
 const svg = d3
   .select("#root")
   .append("svg")
   .attr("height", height + margin.top + margin.bottom)
   .attr("width", width + margin.left + margin.right)
-  .style("border", "2px solid");
+  .style("border", "2px solid")
+  .append("g")
+  .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+svg
+  .append("g")
+  .attr("class", "x-axis")
+  .attr("transform", `translate(0, ${height})`)
+  .call(xAxis);
+svg.append("g").attr("class", "y-axis").call(yAxis);
