@@ -35,6 +35,16 @@ const innerSpace = svg
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
+innerSpace
+  .append("g")
+  .attr("class", "rectangle")
+  .append("rect")
+  .attr("x", 0)
+  .attr("y", 0)
+  .attr("width", x(width))
+  .attr("height", y(0))
+  .style("fill", "white");
+
 const x_axis = innerSpace
   .append("g")
   .attr("class", "x-axis")
@@ -45,7 +55,7 @@ const y_axis = innerSpace.append("g").attr("class", "y-axis").call(yAxis);
 
 function zoomFunction() {
   const newXAxis = d3.event.transform.rescaleX(x);
-  const newYAxis = d3.event.transform.rescaleX(x);
+  const newYAxis = d3.event.transform.rescaleY(y);
 
   const scale = d3.event.transform.k;
 
