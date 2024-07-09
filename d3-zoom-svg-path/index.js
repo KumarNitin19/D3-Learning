@@ -94,3 +94,11 @@ innerSpace
   .attr("fill", "none");
 
 // Adding zoom to svg path elements
+
+const svgPath = d3
+  .select("#root_path")
+  .append("svg")
+  .attr("height", height + margin.top + margin.bottom)
+  .attr("width", width + margin.left + margin.right)
+  .append("g")
+  .attr("transform", `translate(${margin.left}, ${margin.top})`);
