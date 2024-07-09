@@ -92,3 +92,5 @@ innerSpace
   .attr("stroke", "red")
   .attr("stroke-width", strokeWidth)
   .attr("fill", "none");
+
+// Adding zoom to svg path elements
