@@ -100,8 +100,7 @@ const svgPath = d3
   .append("svg")
   .attr("height", height + margin.top + margin.bottom)
   .attr("width", width + margin.left + margin.right)
-  .append("g")
-  .attr("transform", `translate(${margin.left}, ${margin.top})`);
+  .atyle("border", "2px solid");
 
 const svgPathInstructions =
   "M10 315 L 110 215 A 30 50 0 0 1 162.55 162.45 L 172.55 152.45 A 30 50 -45 0 1 215.1 109.9 L 315 10";
@@ -117,3 +116,18 @@ function zoomSvgPath() {
     `translate(${panX}, ${panY}) scale(${scaleMultiplier})`
   );
 }
+
+const zoomPath = d3.zoom().scaleExtent([0.5, 5]).on("zoom", zoomSvgPath);
+const pathInnerSpace = svgPath
+  .append("g")
+  .attr("transform", `translate(${margin.left}, ${margin.top})`)
+  .call(zoom);
+pathInnerSpace
+  .append("g")
+  .attr("class", "hidden_rectangle")
+  .append("rect")
+  .attr("x", 0)
+  .attr("y", 0)
+  .attr("width", width)
+  .attr("height", height)
+  .attr("fill", "#c6dbef");
