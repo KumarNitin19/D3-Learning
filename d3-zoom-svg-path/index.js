@@ -100,10 +100,10 @@ const svgPath = d3
   .append("svg")
   .attr("height", height + margin.top + margin.bottom)
   .attr("width", width + margin.left + margin.right)
-  .atyle("border", "2px solid");
+  .style("border", "2px solid");
 
 const svgPathInstructions =
-  "M10 315 L 110 215 A 30 50 0 0 1 162.55 162.45 L 172.55 152.45 A 30 50 -45 0 1 215.1 109.9 L 315 10";
+  "M 30 80 C 0 160, 125 160, 95 80 M 105 80 C 80 160, 200 160, 170 80";
 
 function zoomSvgPath() {
   const event = d3.event.transform;
@@ -111,17 +111,31 @@ function zoomSvgPath() {
   const panY = event.y;
   const scaleMultiplier = event.k;
 
-  d3.select("path").attr(
+  const newXAxis = d3.event.transform.rescaleX(x);
+  const newYAxis = d3.event.transform.rescaleY(y);
+
+  d3.select(".path_drawing").attr(
     "transform",
     `translate(${panX}, ${panY}) scale(${scaleMultiplier})`
   );
+  d3.selectAll(".ellipseOne")
+    .attr("cx", (d) => newXAxis(d.cx))
+    .attr("cy", (d) => newYAxis(d.cy))
+    .attr("rx", (d) => d.rx * scaleMultiplier)
+    .attr("ry", (d) => d.ry * scaleMultiplier);
+  d3.selectAll(".ellipseTwo")
+    .attr("cx", (d) => newXAxis(d.cx))
+    .attr("cy", (d) => newYAxis(d.cy))
+    .attr("rx", (d) => d.rx * scaleMultiplier)
+    .attr("ry", (d) => d.ry * scaleMultiplier);
 }
 
 const zoomPath = d3.zoom().scaleExtent([0.5, 5]).on("zoom", zoomSvgPath);
 const pathInnerSpace = svgPath
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`)
-  .call(zoom);
+  .call(zoomPath);
+
 pathInnerSpace
   .append("g")
   .attr("class", "hidden_rectangle")
@@ -130,4 +144,72 @@ pathInnerSpace
   .attr("y", 0)
   .attr("width", width)
   .attr("height", height)
-  .attr("fill", "#c6dbef");
+  .attr("fill", "white");
+
+pathInnerSpace
+  .append("g")
+  .append("path")
+  .attr("class", "path_drawing")
+  .attr("d", svgPathInstructions)
+  .attr("fill", "#ce966e")
+  .attr("stroke", "#c5906b")
+  .attr("stroke-width", 2);
+
+const ellipseOne = [
+  {
+    cx: 60,
+    cy: 300,
+    rx: 9,
+    ry: 8,
+  },
+  {
+    cx: 137.5,
+    cy: 300,
+    rx: 9,
+    ry: 8,
+  },
+];
+
+const ellipseTwo = [
+  {
+    cx: 60,
+    cy: 300,
+    rx: 3.5,
+    ry: 2.5,
+  },
+  {
+    cx: 137.5,
+    cy: 300,
+    rx: 3.5,
+    ry: 2.5,
+  },
+];
+
+pathInnerSpace.append("g").call(xAxis).style("display", "none");
+pathInnerSpace.append("g").call(yAxis).style("display", "none");
+
+pathInnerSpace
+  .append("g")
+  .selectAll(".ellipseOne")
+  .data(ellipseOne)
+  .enter()
+  .append("ellipse")
+  .attr("class", "ellipseOne")
+  .attr("cx", (d) => x(d.cx))
+  .attr("cy", (d) => y(d.cy))
+  .attr("rx", (d) => d.rx)
+  .attr("ry", (d) => d.ry)
+  .attr("fill", "#814815");
+
+pathInnerSpace
+  .append("g")
+  .selectAll(".ellipseTwo")
+  .data(ellipseTwo)
+  .enter()
+  .append("ellipse")
+  .attr("class", "ellipseTwo")
+  .attr("cx", (d) => x(d.cx))
+  .attr("cy", (d) => y(d.cy))
+  .attr("rx", (d) => d.rx)
+  .attr("ry", (d) => d.ry)
+  .attr("fill", "#553100");
