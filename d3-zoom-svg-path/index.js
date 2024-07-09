@@ -105,3 +105,15 @@ const svgPath = d3
 
 const svgPathInstructions =
   "M10 315 L 110 215 A 30 50 0 0 1 162.55 162.45 L 172.55 152.45 A 30 50 -45 0 1 215.1 109.9 L 315 10";
+
+function zoomSvgPath() {
+  const event = d3.event.transform;
+  const panX = event.x;
+  const panY = event.y;
+  const scaleMultiplier = event.k;
+
+  d3.select("path").attr(
+    "transform",
+    `translate(${panX}, ${panY}) scale(${scaleMultiplier})`
+  );
+}
