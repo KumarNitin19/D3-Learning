@@ -15,7 +15,7 @@ const originalTriangle = [
   { x: 10, y: 10 },
 ];
 
-const width = 500 - margin.left - margin.right;
+const width = 900 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
 const x = d3.scaleLinear().domain([0, width]).range([0, width]);
@@ -103,7 +103,7 @@ const svgPath = d3
   .style("border", "2px solid");
 
 const svgPathInstructions =
-  "M 30 80 C 0 160, 125 160, 95 80 M 105 80 C 80 160, 200 160, 170 80";
+  "M 30 80 C 0 160, 125 160, 95 80 M 105 80 C 75 160, 200 160, 170 80";
 
 function zoomSvgPath() {
   const event = d3.event.transform;
