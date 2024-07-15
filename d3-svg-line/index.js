@@ -41,9 +41,9 @@ const linePathGenerator = d3
   .line()
   .x((d) => d.x)
   .y((d) => d.y)
-  .curve(d3.curveBasis);
+  .curve(d3.curveStep);
 
-linePathGenerator(lineData);
+// linePathGenerator(lineData);
 
 const svg = d3
   .select("#root")
@@ -53,3 +53,11 @@ const svg = d3
   .style("border", "2px solid")
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+const path = svg
+  .append("path")
+  .attr("stroke", "red")
+  .attr("stroke-width", 5)
+  .attr("fill", "none");
+
+path.attr("d", linePathGenerator(lineData));
