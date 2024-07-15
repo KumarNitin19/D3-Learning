@@ -31,6 +31,6 @@ const linePathGenerator = d3
   .line()
   .x((d) => d.x)
   .y((d) => d.y)
-  .interpolate("linear");
+  .curve(d3.curveBasis);
 
 linePathGenerator(lineData);
