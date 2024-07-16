@@ -17,3 +17,5 @@ function zoomFunction() {
     `translate(${x},${y}) scale(${scale})`
   );
 }
+
+const zoom = d3.zoom().scaleExtent([0.5, 5]).on("zoom", zoomFunction);
