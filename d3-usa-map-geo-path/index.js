@@ -8,10 +8,10 @@ const geo = d3.geoPath();
 // console.log(geo(geoGeometryCollection));
 
 function zoomFunction() {
-  const zoomVal = d3.event.tranform;
-  const x = zoomVal.x;
-  const y = zoomVal.y;
-  const scale = zoomVal.k;
+  const event = d3.event.transform;
+  const x = event.x;
+  const y = event.y;
+  const scale = event.k;
   d3.selectAll("path").attr(
     "transform",
     `translate(${x},${y}) scale(${scale})`
@@ -27,4 +27,5 @@ const svg = d3
   .attr("height", height)
   .style("border", "2px solid")
   .call(zoom);
-svg.append("path").attr("d", geo(geoGeometryCollection));
+
+svg.append("path").attr("d", geo(geoGeometryCollection)).attr("fill", "red");
