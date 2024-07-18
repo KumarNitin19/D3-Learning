@@ -10,5 +10,6 @@ const svg = d3
   .append("svg")
   .attr("height", height)
   .attr("width", width)
+  .style("border", "3px solid")
   .append("g")
   .attr("transform", `translate(30, 30)`);
