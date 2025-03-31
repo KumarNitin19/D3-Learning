@@ -119,12 +119,14 @@ const drawContributionMap = () => {
 
   //adding colours
   const maxMin = d3.extent(testData, (x) => x.numb);
+  const maxVal = d3.max(testData, (d) => d.numb);
+  //   const colours = new Array(5).fill("abc").map((x, i) => {
+  //     const per = (x * 100) / maxVal;
+  //     console.log(maxVal, per, x);
+  //     return `hsl(126, ${per}%, 50%)`;
+  //   });
 
-  const colours = new Array(5)
-    .fill("abc")
-    .map((x, i) => `hsl(60, ${(100 * (5 - i)) / 5}%, 50%)`);
-
-  const colourScale = d3.scaleQuantize().domain(maxMin).range(colours);
+  //   const colourScale = d3.scaleQuantize().domain(maxMin).range(colours);
 
   testData.forEach((entry) => {
     const indiv = rect.filter(
@@ -133,8 +135,11 @@ const drawContributionMap = () => {
         d.getMonth() == entry.date.getMonth()
     );
     indiv
-      .attr("fill", colourScale(entry.numb))
-      .style("opacity", 1)
+      .attr("fill", (d) => {
+        const per = (entry?.numb * 100) / maxVal;
+        return per ? `hsl(126, ${per}%, 50%)` : "#000";
+      })
+      .style("opacity", (d) => (entry?.numb ? 1 : 0.05))
       .attr("data-info", `${entry.numb} contributions.`);
   });
 };
