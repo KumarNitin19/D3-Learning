@@ -62,7 +62,7 @@ const drawContributionMap = () => {
 
   const xAxisLine = g
     .append("g")
-    .style("transform", `translate(0px, ${cellSize * 8}px)`)
+    .style("transform", `translate(0px, -30px)`)
     .call(d3.axisBottom(xAxis));
 
   const yAxisLine = g
@@ -101,7 +101,7 @@ const drawContributionMap = () => {
       return d.getDay() * cellSize;
     })
     .on("mouseover", function (d) {
-      const text = this.getAttribute("data-info");
+      let text = this.getAttribute("data-info");
       if (!text) text = "0 contributions.";
       div
         .html(text)
