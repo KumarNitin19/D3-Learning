@@ -3,7 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     <title>Contribution Map</title>
+    <style>
+      .tooltip {
+        position: absolute;
+        background: #333;
+        color: #ddd;
+        border: 3px solid #ddd;
+        border-radius: 2px;
+        pointer-events: none;
+        padding: 0.25em;
+      }
+
+      .y-axis path {
+        transform: scaleY(1.5) translateY(-30%);
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div id="contribution-map"></div>
+  </body>
 </html>
