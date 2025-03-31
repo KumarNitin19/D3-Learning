@@ -89,17 +89,21 @@ const drawContributionMap = () => {
     .data((d) => d3.timeDays(oneYearAgo, today))
     .enter()
     .append("rect")
-    .attr("stroke", "black")
-    .attr("fill", "transparent")
+    .attr("fill", "black")
     .attr("width", cellSize)
     .attr("height", cellSize)
     .attr("x", function (d) {
       //gets num weeks between one year ago and date of current rect
-      return d3.timeWeek.count(oneYearAgo, d) * cellSize;
+      return (
+        d3.timeWeek.count(oneYearAgo, d) * cellSize +
+        d3.timeWeek.count(oneYearAgo, d) * 4
+      );
     })
     .attr("y", function (d) {
-      return d.getDay() * cellSize;
+      return d.getDay() * cellSize + d.getDay() * 4;
     })
+    .attr("rx", "4px")
+    .style("opacity", 0.05)
     .on("mouseover", function (d) {
       let text = this.getAttribute("data-info");
       if (!text) text = "0 contributions.";
@@ -130,6 +134,7 @@ const drawContributionMap = () => {
     );
     indiv
       .attr("fill", colourScale(entry.numb))
+      .style("opacity", 1)
       .attr("data-info", `${entry.numb} contributions.`);
   });
 };
