@@ -1,4 +1,4 @@
-console.log("contribution map");
+console.log("heat map");
 
 const drawContributionMap = () => {
   const testData = [];
