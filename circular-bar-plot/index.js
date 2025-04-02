@@ -1,6 +1,5 @@
 console.log("circular bar plot");
 
-
 const margin = { top: 10, right: 10, bottom: 10, left: 10 },
   width = 460 - margin.left - margin.right,
   height = 460 - margin.top - margin.bottom,
@@ -9,7 +8,7 @@ const margin = { top: 10, right: 10, bottom: 10, left: 10 },
 
 // append the svg object to the body of the page
 const svg = d3
-  .select("#my_dataviz")
+  .select("#circular-bar-plot")
   .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
